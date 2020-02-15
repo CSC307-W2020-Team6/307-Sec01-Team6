@@ -1,5 +1,6 @@
 from django.shortcuts import render
 
+# matt, this is new, what they see on DB
 # Create your views here.
 from django.http import HttpResponse
 
