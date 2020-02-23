@@ -1,0 +1,8 @@
+{% extends "LyncUp/base.html" %}
+{% block content %}
+    {% for post in posts %}
+        <h1><strong>{{ post.title }}</strong></h1>
+        <h5>By {{ post.author }} on {{ post.date_posted }}</h5>
+        <p>{{ post.content }}</p>
+    {% endfor %}
+{% endblock content %}
