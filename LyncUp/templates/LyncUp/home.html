@@ -1,8 +1,16 @@
 {% extends "LyncUp/base.html" %}
 {% block content %}
     {% for post in posts %}
-        <h1><strong>{{ post.title }}</strong></h1>
-        <h5>By {{ post.author }} on {{ post.date_posted }}</h5>
-        <p>{{ post.content }}</p>
+        <div class="card">
+            <div class="card-body">
+            <h1> <img class="rounded-circle" style="height: 50px; margin-right: 5px" src="{{ post.author.profile.image.url }}">
+                <a href={% url 'post-detail' post.id %}>{{ post.title }}</a>
+            </h1>
+            <h5>By {{ post.author }} on {{ post.date_posted }}</h5>
+            <p>{{ post.content }}</p>
+            </div>
+        </div>
+        <br>
     {% endfor %}
 {% endblock content %}
+

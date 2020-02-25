@@ -1,0 +1,9 @@
+{% extends "LyncUp/base.html" %}
+{% block content %}
+    <h1> <img class="rounded-circle" style="height: 50px; margin-right: 5px" src="{{ object.author.profile.image.url }}"> {{ object.title }}</h1>
+    <h5>By {{ object.author }} on {{ object.date_posted }}</h5>
+    <p>{{ object.content }}</p>
+    {% if object.author == user %}
+
+    {% endif %}
+{% endblock content %}
