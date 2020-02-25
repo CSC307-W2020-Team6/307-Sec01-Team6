@@ -4,6 +4,9 @@
     <h5>By {{ object.author }} on {{ object.date_posted }}</h5>
     <p>{{ object.content }}</p>
     {% if object.author == user %}
-
+        <div>
+            <a class="btn btn-secondary" href="{% url 'post-update' object.id %}">Update</a>
+            <a class="btn btn-danger" href="{% url 'post-delete' object.id %}">Delete</a>
+        </div>
     {% endif %}
 {% endblock content %}
