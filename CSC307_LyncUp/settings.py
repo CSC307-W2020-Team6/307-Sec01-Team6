@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
+    'friendship',
     # 'django.contrib.sites',
     # 'LyncUp.apps.LyncupConfig',
     # 'users',
