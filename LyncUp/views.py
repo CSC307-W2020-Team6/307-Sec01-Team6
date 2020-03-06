@@ -1,7 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib import messages
+from django.db import models
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Post
+from django.contrib.auth.decorators import login_required
+from .models import Post, Group
+from .forms import GroupCreateForm
+from django.contrib.auth.models import User
+
 
 def home(request):
     context = {
@@ -9,6 +15,28 @@ def home(request):
     }
 
     return render(request, "LyncUp/home.html", context)
+
+
+@login_required
+def group(request, model=Group):
+
+    if request.method == 'POST':
+        g_form = GroupCreateForm(request.POST, request.FILES, instance=request.user)
+        if g_form.is_valid():
+            g_form.save()
+            obj = model(**g_form.cleaned_data)
+            obj.save()
+            obj.members.add(request.user)
+            obj.save()
+            messages.success(request, f'Group Made Successfully! :)')
+            return redirect('group-list')
+    else:
+        g_form = GroupCreateForm(instance=request.user)
+
+    context = {
+        'g_form': g_form
+    }
+    return render(request, 'LyncUp/group_form.html', context)
 
 
 class PostListView(ListView):
@@ -19,8 +47,17 @@ class PostListView(ListView):
     ordering = ['-date_posted']
 
 
+class GroupListView(ListView):
+    model = Group
+    context_object_name = 'groups'
+
+
 class PostDetailView(DetailView):
     model = Post
+
+
+class GroupDetailView(DetailView):
+    model = Group
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):
@@ -48,6 +85,18 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return False
 
 
+class GroupUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Group
+    fields = ['name', 'image', 'members']
+
+    # user verification test
+    def test_func(self):
+        group = self.get_object()
+        if self.request.user in group.members:
+            return True
+        return False
+
+
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
     success_url = '/'
@@ -56,6 +105,18 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         post = self.get_object()
         if self.request.user == post.author:
+            return True
+        return False
+
+
+class GroupDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Group
+    success_url = '/'
+
+    # test used to see if user can get to page
+    def test_func(self):
+        group = self.get_object()
+        if self.request.user in group.members:
             return True
         return False
 

@@ -5,6 +5,7 @@ from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.models import User
 from friendship.models import Friend, Follow, Block
 
+
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)

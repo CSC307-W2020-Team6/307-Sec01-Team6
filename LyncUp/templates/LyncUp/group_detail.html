@@ -1,0 +1,14 @@
+{% extends "LyncUp/base.html" %}
+{% block content %}
+    <h1> <img class="rounded-circle" style="height: 50px; margin-right: 5px" src="{{ object.image.url }}"> {{ object.name }}</h1>
+    {% for member in object.members %}
+        <h3>{{ member.username }}</h3>
+    {% endfor %}
+    <hr>
+    {% if user in object.members %}
+        <div>
+            <a class="btn btn-secondary" href="{% url 'group-update' object.id %}">Update</a>
+            <a class="btn btn-danger" href="{% url 'group-delete' object.id %}">Delete</a>
+        </div>
+    {% endif %}
+{% endblock content %}
