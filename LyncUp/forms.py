@@ -6,5 +6,10 @@ from .models import Group
 class GroupCreateForm(forms.ModelForm):
     class Meta:
         model = Group
-        fields = ['name', 'image']
+        fields = ['name', 'image', 'members']
 
+
+class GroupUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Group
+        fields = ['name', 'image', 'members']
