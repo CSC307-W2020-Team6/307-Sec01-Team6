@@ -83,6 +83,14 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
+class GroupCreateView(LoginRequiredMixin, CreateView):
+    model = Group
+    fields = ['name', 'image', 'members']
+
+    def form_valid(self, form):
+        return super().form_valid(form)
+
+
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
     fields = ['title', 'content']
