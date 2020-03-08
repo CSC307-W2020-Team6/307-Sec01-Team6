@@ -38,11 +38,8 @@
         <!-- Navbar Right Side -->
         <div class="navbar-nav">
             {% if user.is_authenticated %}
-<<<<<<< HEAD
                 <a class="nav-item nav-link" href={% url 'group' %}>Create Group</a>
-=======
                 <a class="nav-item nav-link" href="{%  url 'addfriend' %}">Add Friend</a>
->>>>>>> addFriendship
                 <a class="nav-item nav-link" href="{% url 'post-create' %}">Create Post</a>
                 <a class="nav-item nav-link" href={% url 'profile' %}>Profile</a>
                 <a class="nav-item nav-link" href={% url 'logout' %}>Logout</a>

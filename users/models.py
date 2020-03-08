@@ -22,8 +22,6 @@ class Profile(models.Model):
             img.thumbnail(output_size)
             img.save(self.image.path)
 
-<<<<<<< HEAD
-=======
 ## From here
 class Relationship(models.Model):
     from_person = models.ForeignKey(Profile, related_name="from_people",
@@ -54,5 +52,3 @@ class Friend(models.Model):
 
     def __str__(self):
         return str(self.current_user)
-
->>>>>>> addFriendship

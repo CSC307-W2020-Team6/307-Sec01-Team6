@@ -46,8 +46,6 @@ def profile(request):
         'p_form': p_form
     }
     return render(request, 'users/profile.html', context)
-<<<<<<< HEAD
-=======
 
 ## From Here
 @login_required
@@ -91,4 +89,3 @@ def add_friends(request):
     #     Friend.remove_friend(owner, new_friend)
     #
     # return redirect(new_friend.get_absolute_url())
->>>>>>> addFriendship
