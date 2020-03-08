@@ -1,5 +1,18 @@
+{#<script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.2.0/zxcvbn.js"></script>#}
+{##}
+{#<link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>#}
+{#<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>#}
+{#<script src="https://www.solodev.com/assets/password/strength.js"></script>#}
+{##}
+{#<h1><span>Password</span> Strength</h1>#}
+{#<p>Test the strength of your password below.</p>#}
+{#<form id="myform" action="" method="get" accept-charset="utf-8">#}
+{#  <input id="myPassword" type="password" name="" value="">#}
+{#</form>#}
+
 {% extends "LyncUp/base.html" %}
 {% load crispy_forms_tags %}
+{#{{% crispy form form.helper %}#}
 {% block content %}
 
    <div class="content-section">
@@ -7,7 +20,15 @@
             {% csrf_token %}
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Join Today</legend>
-                {{ form|crispy }}
+
+                {{ form.username|as_crispy_field }}
+                {{ form.email|as_crispy_field }}
+                {{ form.password1|as_crispy_field }}
+                {{ form.password2|as_crispy_field }}
+{#                <label for="password">Enter password</label>#}
+{#                <input type="password" id="password" required>#}
+{#                <meter max = "4" id="password-strength-meter"></meter>#}
+{#                <p id="password-strength-text"></p>#}
             </fieldset>
             <div class="form-group">
                 <button class="btn btn-outline-info" type="submit">Sign Up</button>
