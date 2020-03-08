@@ -1,14 +1,16 @@
 {% extends "LyncUp/base.html" %}
 {% block content %}
+    <h1>Your Groups</h1>
     {% for group in groups %}
-        <div class="card">
+        {% if request.user in group.members.all %}
+        <div class="card" style="margin-bottom: 5px">
             <div class="card-body">
-            <h1> <img class="rounded-circle" style="height: 50px" src="{{ group.image.url }}">
+            <h3> <img class="rounded-circle" style="height: 50px" src="{{ group.image.url }}">
                 <a href={% url 'group-detail' group.id %}>{{ group.name }}</a>
-            </h1>
+            </h3>
             </div>
         </div>
-        <br>
+        {% endif %}
     {% endfor %}
 {% endblock content %}
 
