@@ -17,4 +17,5 @@ urlpatterns = [
     path('group/<int:pk>/', GroupDetailView.as_view(), name='group-detail'),
     path('group/<int:pk>/delete/', GroupDeleteView.as_view(), name='group-delete'),
     path('about/', views.about, name='LyncUp-about'),
+
 ]
