@@ -1,5 +1,9 @@
 # Created by https://www.gitignore.io/api/django
 # Edit at https://www.gitignore.io/?templates=django
+MyDatabase
+Untitled-1.ai
+venv/
+.idea
 
 ### Django ###
 *.log
