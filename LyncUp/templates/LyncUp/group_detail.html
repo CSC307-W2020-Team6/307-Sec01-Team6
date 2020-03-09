@@ -4,7 +4,7 @@
     <h5>Members:</h5>
     {% for member in object.members.all %}
         <div class="card" style="margin-bottom: 5px; display: inline-block; min-width: 400px">
-        <p style="display: inline"><img class="rounded-circle" style="height: 50px; width: 50px; margin: 0" src="{{ member.profile.image.url }}">
+        <p style="display: inline"><img class="rounded-circle" style="height: 50px; width: 50px; margin: 5px" src="{{ member.profile.image.url }}">
             {{ member.username }}
         </p>
          {% if member == object.group_owner %}
