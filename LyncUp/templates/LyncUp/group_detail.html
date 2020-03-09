@@ -3,8 +3,16 @@
     <h1> <img class="rounded-circle" style="height: 50px; margin-right: 5px" src="{{ object.image.url }}"> {{ object.name }}</h1>
     <h5>Members:</h5>
     {% for member in object.members.all %}
-        <p><img class="rounded-circle" style="height: 50px; margin-right: 5px" src="{{ member.profile.image.url }}">{{ member.username }}</p>
-    {% endfor %}
+        <div class="card" style="margin-bottom: 5px; display: inline-block; min-width: 400px">
+        <p style="display: inline"><img class="rounded-circle" style="height: 50px; width: 50px; margin: 0" src="{{ member.profile.image.url }}">
+            {{ member.username }}
+        </p>
+         {% if member == object.group_owner %}
+            <p class="text-muted" style="margin-bottom: 5px; margin-left: 80px; display: inline;">owner</p>
+         {% endif %}
+        </div>
+        <br>
+        {% endfor %}
     <hr>
     {% if user in object.members.all %}
         <div>

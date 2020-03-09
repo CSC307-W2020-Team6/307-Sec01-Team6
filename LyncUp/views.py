@@ -88,6 +88,7 @@ class GroupCreateView(LoginRequiredMixin, CreateView):
     fields = ['name', 'image', 'members']
 
     def form_valid(self, form):
+        form.instance.group_owner = self.request.user
         return super().form_valid(form)
 
 
@@ -118,7 +119,7 @@ class GroupUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     # user verification test
     def test_func(self):
         group = self.get_object()
-        if self.request.user in group.members.all():
+        if self.request.user == group.group_owner:
             return True
         return False
 
@@ -142,7 +143,7 @@ class GroupDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     # test used to see if user can get to page
     def test_func(self):
         group = self.get_object()
-        if self.request.user in group.members.all():
+        if self.request.user == group.group_owner:
             return True
         return False
 

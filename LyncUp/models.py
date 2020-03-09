@@ -22,6 +22,7 @@ class Group(models.Model):
     name = models.CharField(max_length=64)
     members = models.ManyToManyField(User)
     image = models.ImageField(default='default.jpg', upload_to='group_pics')
+    group_owner = models.ForeignKey(User, models.SET_NULL, null=True, blank=True, related_name='group_owner')
 
     def __str__(self):
         return self.name
