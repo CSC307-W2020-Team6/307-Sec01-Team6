@@ -57,7 +57,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'CSC307_LyncUp.urls'
+ROOT_URLCONF = 'urls'
 
 TEMPLATES = [
     {
