@@ -58,6 +58,7 @@ class PostListView(ListView):
     model = Post
     template_name = 'LyncUp/home.html'
     # <app>/<model>_<viewtype>.html is default template name
+    # default temp is LyncUp/post_list.html
     context_object_name = 'posts'
     ordering = ['-date_posted']
 
