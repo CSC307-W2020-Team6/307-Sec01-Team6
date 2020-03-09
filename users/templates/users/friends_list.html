@@ -13,11 +13,12 @@
             </div>
         {% endfor %}
     {% endfor %}
-
+    <br>
+    <h3> Remove Friends: </h3>
     <form method="POST" enctype = "multipart/form-data">
         {% csrf_token %}
         <fieldset class = "form-group">
-            <legend class "border-bottom mb-4"> Remove Friends: </legend>
+            <legend class "border-bottom mb-4"> </legend>
             {{ r_form|crispy }}
         </fieldset>
         <div class="form-group">

@@ -67,7 +67,7 @@ def remove_friends(request):
                 messages.success(request, f'Friend Removed.')
                 return redirect('profile')
             else:
-                messages.success(request, f'Inputted user not in friends list.')
+                messages.warning(request, f'Inputted user not in friends list.')
                 return redirect('profile')
 
 @login_required
@@ -88,7 +88,7 @@ def add_friends(request):
                 messages.success(request, f'Friend Added!')
                 return redirect('profile')
             else:
-                messages.success(request, f'No user found, can only add existing users.')
+                messages.warning(request, f'No user found, can only add existing users.')
                 return redirect('profile')
     else:
         f_form = AddFriendForm(instance=request.user)
