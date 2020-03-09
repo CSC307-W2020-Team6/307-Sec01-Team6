@@ -52,4 +52,4 @@ class Friend(models.Model):
     #     super().save()
 
     def __str__(self):
-        return str(self.users)
+        return f'{self.current_user.username} Friend List'

@@ -49,25 +49,6 @@ def profile(request):
 
 
 ## From Here
-@login_required
-def remove_friends(request):
-    found_flag = 0
-    if request.method == "POST":
-        r_form = RemoveFriendForm(request.POST, instance=request.user)
-        if r_form.is_valid():
-            r_form.save()
-            the_friend = r_form.cleaned_data.get("User")
-            for user in Friend.objects.all():
-                if str(user) == str(the_friend):
-                    found_flag = 1
-                    break
-            if found_flag == 1:
-                Friend.remove_friend(request.user, the_friend)
-                messages.success(request, f'Friend Removed.')
-                return redirect('profile')
-            else:
-                messages.warning(request, f'Inputted user not in friends list.')
-                return redirect('profile')
 
 @login_required
 def add_friends(request):
@@ -91,17 +72,40 @@ def add_friends(request):
                 return redirect('profile')
     else:
         f_form = AddFriendForm(instance=request.user)
-
     context = {
         'f_form': f_form
     }
-    # new_friend = User.objects.get()
-    # # if operation == 'add':
-    # Friend.make_friend(request.user, new_friend)
-    # elif operation == 'remove':
-    #     Friend.remove_friend(request.user, new_friend)
-
     return render(request, 'users/addFriends.html', context) # , context
+
+@login_required
+def remove_friends(request):
+    found_flag = 0
+    if request.method == "POST":
+        r_form = RemoveFriendForm(request.POST, instance=request.user)
+        if r_form.is_valid():
+            r_form.save()
+            the_friend = r_form.cleaned_data.get("User")
+            friendlist = Friend.objects.filter(current_user=request.user).get()
+            for user in friendlist.users.all():
+                if str(user) == str(the_friend):
+                    found_flag = 1
+                    break
+
+            if found_flag == 1:
+                Friend.remove_friend(request.user, the_friend)
+                messages.success(request, f'Friend Removed.')
+                return redirect('profile')
+            else:
+                messages.warning(request, f'Inputted user not in friends list.')
+                return redirect('profile')
+    else:
+        r_form = RemoveFriendForm(instance=request.user)
+    context = {
+        'r_form': r_form
+    }
+    return render(request, 'users/removeFriends.html', context)
+
+
 
 class FriendListView(ListView):
     model = Friend
