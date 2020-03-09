@@ -27,10 +27,10 @@ class Group(models.Model):
 
 
 class Post(models.Model):
-    title = models.CharField(max_length = 100)
+    title = models.CharField(max_length=100)
     content = models.TextField()
-    date_posted = models.DateTimeField(default = timezone.now)
-    author = models.ForeignKey(User, on_delete = models.CASCADE)
+    date_posted = models.DateTimeField(default=timezone.now)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     group = models.ForeignKey(Group, models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
