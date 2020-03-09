@@ -73,13 +73,20 @@ class PostDetailView(DetailView):
 class GroupDetailView(DetailView):
     model = Group
 
+    def get_context_data(self, **kwargs):
+        context = super(GroupDetailView, self).get_context_data()
+        context['posts'] = Post.objects.all()
+        return context
+
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ['title', 'content']
+    fields = ['title', 'content', 'group']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
+        if form.instance.author not in form.instance.group.members.all():
+            return False
         return super().form_valid(form)
 
 

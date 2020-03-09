@@ -1,6 +1,25 @@
 {% extends "LyncUp/base.html" %}
 {% block content %}
     <h1> <img class="rounded-circle" style="height: 50px; margin-right: 5px" src="{{ object.image.url }}"> {{ object.name }}</h1>
+
+    <h2>Chat Activity:</h2>
+    {% for post in posts %}
+        {% if post.group == object %}
+            <div class="card">
+            <div class="card-body">
+            <h1> <img class="rounded-circle" style="height: 50px; margin-right: 5px" src="{{ post.author.profile.image.url }}">
+                <a href={% url 'post-detail' post.id %}>{{ post.title }}</a>
+            </h1>
+            <h5>By {{ post.author }} on {{ post.date_posted }}</h5>
+            <p>{{ post.content }}</p>
+            </div>
+        </div>
+        <br>
+        {% endif %}
+    {% endfor %}
+
+    <hr>
+
     <h5>Members:</h5>
     {% for member in object.members.all %}
         <div class="card" style="margin-bottom: 5px; display: inline-block; min-width: 400px">
@@ -13,11 +32,15 @@
         </div>
         <br>
         {% endfor %}
+
     <hr>
+
     {% if user in object.members.all %}
         <div>
             <a class="btn btn-secondary" href="{% url 'group-update' object.id %}">Update</a>
             <a class="btn btn-danger" href="{% url 'group-delete' object.id %}">Delete</a>
         </div>
     {% endif %}
+
+    <br>
 {% endblock content %}

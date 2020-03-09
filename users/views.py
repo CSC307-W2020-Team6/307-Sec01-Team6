@@ -10,7 +10,6 @@ from friendship.models import Friend
 from .models import Profile, Relationship
 
 
-
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
