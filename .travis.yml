@@ -7,5 +7,5 @@ python:
         - "3.8-dev"
 
 # command to install dependencies
-script: python3 users/tests.py  
+script: users/tests.py  
 
