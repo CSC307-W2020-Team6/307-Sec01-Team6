@@ -2,45 +2,54 @@
 {% block content %}
     <h1> <img class="rounded-circle" style="height: 50px; margin-right: 5px" src="{{ object.image.url }}"> {{ object.name }}</h1>
 
-    <h2>Chat Activity:</h2>
-    {% for post in posts %}
-        {% if post.group == object %}
-            <div class="card">
-            <div class="card-body">
-            <h1> <img class="rounded-circle" style="height: 50px; margin-right: 5px" src="{{ post.author.profile.image.url }}">
-                <a href={% url 'post-detail' post.id %}>{{ post.title }}</a>
-            </h1>
-            <h5>By {{ post.author }} on {{ post.date_posted }}</h5>
-            <p>{{ post.content }}</p>
-            </div>
+    <div class="row">
+    <div class="col-md-8">
+        <div class="content-section">
+            <h2>Chat Activity:</h2>
+            {% for post in posts %}
+                {% if post.group == object %}
+                    <div class="card">
+                    <div class="card-body">
+                    <h1> <img class="rounded-circle" style="height: 50px; margin-right: 5px" src="{{ post.author.profile.image.url }}">
+                        <a href={% url 'post-detail' post.id %}>{{ post.title }}</a>
+                    </h1>
+                    <h5>By {{ post.author }} on {{ post.date_posted }}</h5>
+                    <p>{{ post.content }}</p>
+                    </div>
+                </div>
+                <br>
+                {% endif %}
+            {% endfor %}
+             <a class="btn btn-primary" href={% url 'post-create' %}>Post</a>
         </div>
-        <br>
-        {% endif %}
-    {% endfor %}
-     <a class="btn btn-primary" href={% url 'post-create' %}>Post</a>
+    </div>
 
     <hr>
-
-    <h5>Members:</h5>
-    {% for member in object.members.all %}
-        <div class="card" style="margin-bottom: 5px; display: inline-block; min-width: 400px">
-        <div class="card-body" style="display: inline-block; margin: 0; padding: 0">
-        <h6 class="card-title" style="display: inline"><img class="rounded-circle" style="height: 50px; width: 50px; margin: 5px; alignment: center" src="{{ member.profile.image.url }}">
-            {{ member.username }}
-        </h6>
-         {% if member == object.group_owner %}
-            <p class="text-muted" style="margin-bottom: 5px; margin-left: 80px; display: inline;">owner</p>
-         {% endif %}
+    <div class="col-md-4">
+        <div class="content-section">
+            <h5>Members:</h5>
+            {% for member in object.members.all %}
+                <div class="card" style="margin-bottom: 5px; display: inline-block; min-width: 400px">
+                    <div class="card-body" style="display: inline-block; margin: 0; padding: 0">
+                        <h6 class="card-title" style="display: inline">
+                            <img class="rounded-circle" style="height: 50px; width: 50px; margin: 5px; alignment: center" src="{{ member.profile.image.url }}">
+                            {{ member.username }}
+                        </h6>
+                        {% if member == object.group_owner %}
+                            <p class="text-muted" style="margin-bottom: 5px; margin-left: 80px; display: inline;">owner</p>
+                        {% endif %}
+                    </div>
+                </div>
+                <br>
+            {% endfor %}
         </div>
-        </div>
-        <br>
-        {% endfor %}
-
+    </div>
+    </div>
     <hr>
 
     {% if user in object.members.all %}
         <div>
-            <a class="btn btn-secondary" href="{% url 'group-update' object.id %}">Update</a>
+            <a class="btn btn-secondary" href="{% url 'group-update' object.id %}">Edit Group</a>
             <a class="btn btn-danger" href="{% url 'group-delete' object.id %}">Delete</a>
         </div>
     {% endif %}
