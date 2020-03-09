@@ -1,4 +1,4 @@
 *.pyc
 *.log
 __pycache__
-db_name
+./db_name
