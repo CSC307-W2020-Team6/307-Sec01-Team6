@@ -1,6 +1,6 @@
 {% extends "LyncUp/base.html" %}
 {% block content %}
-    <h1> <img class="rounded-circle" style="height: 50px; margin-right: 5px" src="{{ object.image.url }}"> {{ object.name }}</h1>
+    <h1> <img class="rounded-circle" style="height: 50px; width: 50px; margin-right: 5px" src="{{ object.image.url }}"> {{ object.name }}</h1>
 
     <div class="row">
     <div class="col-md-8">
@@ -10,7 +10,7 @@
                 {% if post.group == object %}
                     <div class="card">
                     <div class="card-body">
-                    <h1> <img class="rounded-circle" style="height: 50px; margin-right: 5px" src="{{ post.author.profile.image.url }}">
+                    <h1> <img class="rounded-circle" style="height: 50px; width: 50px; margin-right: 5px" src="{{ post.author.profile.image.url }}">
                         <a href={% url 'post-detail' post.id %}>{{ post.title }}</a>
                     </h1>
                     <h5>By {{ post.author }} on {{ post.date_posted }}</h5>
@@ -36,7 +36,7 @@
                             {{ member.username }}
                         </h6>
                         {% if member == object.group_owner %}
-                            <p class="text-muted" style="margin-bottom: 5px; margin-left: 80px; display: inline;">owner</p>
+                            <p class="text-muted" style="margin-bottom: 5px; margin-left: 200px; display: inline;">owner</p>
                         {% endif %}
                     </div>
                 </div>
