@@ -35,6 +35,7 @@ def group(request, model=Group, **kwargs):
     }
     return render(request, 'LyncUp/group_form.html', context)
 
+
 @login_required
 def edit_group(request, model=Group, **kwargs):
 
@@ -73,13 +74,21 @@ class PostDetailView(DetailView):
 class GroupDetailView(DetailView):
     model = Group
 
+    def get_context_data(self, **kwargs):
+        context = super(GroupDetailView, self).get_context_data()
+        context['posts'] = reversed(Post.objects.all())
+        return context
+
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ['title', 'content']
+    fields = ['title', 'content', 'group']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
+        if form.instance.author not in form.instance.group.members.all():
+            messages.warning(self.request, f'Could not post. You do not belong to {form.instance.group.name}')
+            return redirect('LyncUp-home')
         return super().form_valid(form)
 
 
@@ -88,6 +97,7 @@ class GroupCreateView(LoginRequiredMixin, CreateView):
     fields = ['name', 'image', 'members']
 
     def form_valid(self, form):
+        form.instance.group_owner = self.request.user
         return super().form_valid(form)
 
 
@@ -119,7 +129,7 @@ class GroupUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     # user verification test
     def test_func(self):
         group = self.get_object()
-        if self.request.user in group.members.all():
+        if self.request.user == group.group_owner:
             return True
         return False
 
@@ -143,10 +153,10 @@ class GroupDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     # test used to see if user can get to page
     def test_func(self):
         group = self.get_object()
-        if self.request.user in group.members.all():
+        if self.request.user == group.group_owner:
             return True
         return False
 
 
 def about(request):
-    return render(request, "LyncUp/about.html", {'title' : 'About'})
+    return render(request, "LyncUp/about.html", {'title': 'About'})

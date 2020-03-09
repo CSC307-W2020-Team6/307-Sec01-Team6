@@ -8,9 +8,8 @@ from crispy_forms.helper import FormHelper
 from .models import Profile, Friend
 
 
-
 class UserRegisterForm(UserCreationForm):
-    #helper = FormHelper()
+    # helper = FormHelper()
 
     email = forms.EmailField
     username = forms.CharField()
@@ -39,7 +38,7 @@ class ProfileUpdateForm(forms.ModelForm):
         fields = ['image']
 
 
-## From here
+# From here
 class AddFriendForm(forms.ModelForm):
     User = forms.CharField()
     class Meta:
@@ -51,4 +50,3 @@ class RemoveFriendForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['User']
-

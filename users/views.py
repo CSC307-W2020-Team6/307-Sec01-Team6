@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import UserManager, BaseUserManager
@@ -10,7 +10,6 @@ from .models import Friend
 from .models import Profile #, Relationship
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-
 
 def register(request):
     if request.method == 'POST':
@@ -94,7 +93,7 @@ def add_friends(request):
         f_form = AddFriendForm(instance=request.user)
 
     context = {
-        'f_form':f_form
+        'f_form': f_form
     }
     # new_friend = User.objects.get()
     # # if operation == 'add':
@@ -107,4 +106,3 @@ def add_friends(request):
 class FriendListView(ListView):
     model = Friend
     context_object_name = "friends"
-
