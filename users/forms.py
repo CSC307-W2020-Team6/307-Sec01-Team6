@@ -40,9 +40,13 @@ class ProfileUpdateForm(forms.ModelForm):
 
 # From here
 class AddFriendForm(forms.ModelForm):
-
-    friend = forms.CharField()
-
+    User = forms.CharField()
     class Meta:
-        model = Friend
-        fields = ['friend']
+        model = User
+        fields = ['User']
+
+class RemoveFriendForm(forms.ModelForm):
+    User = forms.CharField()
+    class Meta:
+        model = User
+        fields = ['User']

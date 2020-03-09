@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.conf.urls import url
 from django.urls import path, include
 from users import views as user_views
 from LyncUp import views as LyncUp_views
@@ -25,9 +26,11 @@ from LyncUp import views as LyncUp_views
 #from django.conf.urls import include, url
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('friends_list/', user_views.FriendListView.as_view(template_name = 'users/friends_list.html'), name="friends_list"),
     path('register/', user_views.register, name='register'),
     path('profile/', user_views.profile, name='profile'),
     path('addfriend/', user_views.add_friends, name='addfriend'),
+    #url(r'^connect/(?P<operation>.+)/(?P<pk>\d+)/$', user_views.add_friends, name='add_friends'),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
     path('', include('LyncUp.urls')),
