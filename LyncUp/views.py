@@ -35,6 +35,7 @@ def group(request, model=Group, **kwargs):
     }
     return render(request, 'LyncUp/group_form.html', context)
 
+
 @login_required
 def edit_group(request, model=Group, **kwargs):
 
@@ -157,4 +158,4 @@ class GroupDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 
 def about(request):
-    return render(request, "LyncUp/about.html", {'title' : 'About'})
+    return render(request, "LyncUp/about.html", {'title': 'About'})
