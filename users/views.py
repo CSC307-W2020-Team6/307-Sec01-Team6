@@ -4,11 +4,12 @@ from django.contrib import messages
 from django.contrib.auth.models import UserManager, BaseUserManager
 from django.contrib.auth.models import User
 from django.db import models
-from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, AddFriendForm
+from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, AddFriendForm, RemoveFriendForm
 from django.contrib.auth.models import User
-from friendship.models import Friend
-from .models import Profile, Relationship
-
+from .models import Friend
+from .models import Profile #, Relationship
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 
 def register(request):
@@ -46,49 +47,64 @@ def profile(request):
         'p_form': p_form
     }
     return render(request, 'users/profile.html', context)
-<<<<<<< HEAD
-=======
+
 
 ## From Here
 @login_required
+def remove_friends(request):
+    found_flag = 0
+    if request.method == "POST":
+        r_form = RemoveFriendForm(request.POST, instance=request.user)
+        if r_form.is_valid():
+            r_form.save()
+            the_friend = r_form.cleaned_data.get("User")
+            for user in Friend.objects.all():
+                if str(user) == str(the_friend):
+                    found_flag = 1
+                    break
+            if found_flag == 1:
+                Friend.remove_friend(request.user, the_friend)
+                messages.success(request, f'Friend Removed.')
+                return redirect('profile')
+            else:
+                messages.success(request, f'Inputted user not in friends list.')
+                return redirect('profile')
+
+@login_required
 def add_friends(request):
+    found_flag = 0
     # objects = UserManager()
     if request.method == "POST":
         f_form = AddFriendForm(request.POST, instance=request.user) #instance=request.user
         if f_form.is_valid():
             f_form.save()
-
-            messages.success(request, f'Friend Added!')
-            return redirect('profile')
+            new_friend = f_form.cleaned_data.get("User")
+            for user in User.objects.all():
+                if str(user) == str(new_friend):
+                    found_flag = 1
+                    break
+            if found_flag == 1:
+                Friend.make_friend(request.user, new_friend)
+                messages.success(request, f'Friend Added!')
+                return redirect('profile')
+            else:
+                messages.success(request, f'No user found, can only add existing users.')
+                return redirect('profile')
     else:
         f_form = AddFriendForm(instance=request.user)
 
     context = {
         'f_form':f_form
     }
-    # f_form = AddFriendForm(request.POST, instance=request.user)
-    # username = f_form
-    # if request.user.is_authenticated == True:
-    #     user = Profile.objects.get_by_natural_key(username)
-    #     Relationship.objects.get_or_create(
-    #         from_person=request.user,
-    #         to_person=user)
-    #     # return HttpResponseRedirect('/profile/')
-    # context = {
-    #     'f_form':f_form
-    # }
+    # new_friend = User.objects.get()
+    # # if operation == 'add':
+    # Friend.make_friend(request.user, new_friend)
+    # elif operation == 'remove':
+    #     Friend.remove_friend(request.user, new_friend)
 
-    return render(request, 'users/addFriends.html', context)
-    # n_f = get_object_or_404(User, username=username)
-    # owner = request.user.userprofile
-    # new_friend = User.objects.get(user=n_f)
-    #
-    # if verb == "add":
-    #     new_friend.followers.add(owner)
-    #     Friend.make_friend(owner, new_friend)
-    # else:
-    #     new_friend.followers.remove(owner)
-    #     Friend.remove_friend(owner, new_friend)
-    #
-    # return redirect(new_friend.get_absolute_url())
->>>>>>> addFriendship
+    return render(request, 'users/addFriends.html', context) # , context
+
+class FriendListView(ListView):
+    model = Friend
+    context_object_name = "friends"
+
