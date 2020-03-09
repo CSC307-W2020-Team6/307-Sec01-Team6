@@ -9,12 +9,12 @@ from .models import Profile, Friend
 
 
 class UserRegisterForm(UserCreationForm):
-    #helper = FormHelper()
+    # helper = FormHelper()
 
     email = forms.EmailField
     username = forms.CharField()
-    password1 = forms.CharField(widget=PasswordStrengthInput())
-    password2 = forms.CharField(widget=PasswordConfirmationInput())
+    # password1 = forms.CharField(widget=PasswordStrengthInput())
+    # password2 = forms.CharField(widget=PasswordConfirmationInput())
 
 
     class Meta:
