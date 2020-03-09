@@ -86,7 +86,8 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         if form.instance.author not in form.instance.group.members.all():
-            return False
+            messages.warning(self.request, f'Could not post. You do not belong to {form.instance.group.name}')
+            return redirect('LyncUp-home')
         return super().form_valid(form)
 
 

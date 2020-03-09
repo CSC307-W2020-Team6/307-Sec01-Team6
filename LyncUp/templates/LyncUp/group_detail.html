@@ -17,18 +17,21 @@
         <br>
         {% endif %}
     {% endfor %}
+     <a class="btn btn-primary" href={% url 'post-create' %}>Post</a>
 
     <hr>
 
     <h5>Members:</h5>
     {% for member in object.members.all %}
         <div class="card" style="margin-bottom: 5px; display: inline-block; min-width: 400px">
-        <p style="display: inline"><img class="rounded-circle" style="height: 50px; width: 50px; margin: 5px" src="{{ member.profile.image.url }}">
+        <div class="card-body" style="display: inline-block; margin: 0; padding: 0">
+        <h6 class="card-title" style="display: inline"><img class="rounded-circle" style="height: 50px; width: 50px; margin: 5px; alignment: center" src="{{ member.profile.image.url }}">
             {{ member.username }}
-        </p>
+        </h6>
          {% if member == object.group_owner %}
             <p class="text-muted" style="margin-bottom: 5px; margin-left: 80px; display: inline;">owner</p>
          {% endif %}
+        </div>
         </div>
         <br>
         {% endfor %}

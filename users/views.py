@@ -61,7 +61,7 @@ def add_friends(request):
         f_form = AddFriendForm(instance=request.user)
 
     context = {
-        'f_form':f_form
+        'f_form': f_form
     }
     # f_form = AddFriendForm(request.POST, instance=request.user)
     # username = f_form
