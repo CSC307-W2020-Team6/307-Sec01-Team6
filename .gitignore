@@ -1,13 +1,9 @@
+# Created by https://www.gitignore.io/api/django
+# Edit at https://www.gitignore.io/?templates=django
 MyDatabase
 Untitled-1.ai
 venv/
-db_name/
-./db_name
-db_name
 .idea
-
-# Created by https://www.gitignore.io/api/django
-# Edit at https://www.gitignore.io/?templates=django
 
 ### Django ###
 *.log
@@ -15,6 +11,9 @@ db_name
 *.pyc
 __pycache__/
 local_settings.py
+db_name
+./db_name
+db_name/
 db.sqlite3
 db.sqlite3-journal
 media
