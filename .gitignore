@@ -2,6 +2,8 @@ MyDatabase
 Untitled-1.ai
 venv/
 db_name/
+./db_name
+db_name
 .idea
 
 # Created by https://www.gitignore.io/api/django
