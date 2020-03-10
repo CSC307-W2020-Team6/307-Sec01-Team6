@@ -2,30 +2,18 @@
 {% load crispy_forms_tags %}
 {% block content %}
     <h1>Your Friends:</h1>
-    {% for Friend in object_list %}
-        {% for user in Friend.users.all %}
+    {% for friend in friends %}
+        {% for user in friend.users.all %}
             <div class = "card" style="margin-bottom: 5px; padding: 0; display: flow">
                 <div class="card-body" style="padding: 0; margin: 0">
                  <h3 style="margin: 0;">
                      <img class="rounded-circle" style="height: 75px; width: 75px; margin: 5px" src="{{ user.profile.image.url }}">
-                    {{ user.username }}
+                    {{ user }}
                 </h3>
                 </div>
             </div>
         {% endfor %}
     {% endfor %}
     <br>
-{#    <h3> Remove Friends: </h3>#}
-{#    <form method="POST" enctype = "multipart/form-data">#}
-{#        {% csrf_token %}#}
-{#        <fieldset class = "form-group">#}
-{#            <legend class "border-bottom mb-4"> </legend>#}
-{#            {{ r_form|crispy }}#}
-{#        </fieldset>#}
-{#        <div class="form-group">#}
-{#            <button class="btn btn-outline-info" type="submit">Remove Friend</button>#}
-{#        </div>#}
-{#    </form>#}
-
 
 {% endblock content %}
