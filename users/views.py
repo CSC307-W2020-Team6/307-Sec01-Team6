@@ -59,8 +59,13 @@ def add_friends(request):
         if f_form.is_valid():
             f_form.save()
             new_friend = f_form.cleaned_data.get("User")
+            friendlist = Friend.objects.filter(current_user=request.user).get()
             for user in User.objects.all():
                 if str(user) == str(new_friend):
+                    for u in friendlist.users.all():
+                        if str(u) == str(new_friend):
+                            messages.warning(request, f'User is already in your friends list!')
+                            return redirect('profile')
                     found_flag = 1
                     break
             if found_flag == 1:
