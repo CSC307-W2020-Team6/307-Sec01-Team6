@@ -1,10 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "LyncUp/base.html" %}
+{% block content %}
 
-</body>
-</html>
+   <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Delete Event</legend>
+                <h2>Do you rlly want to delete event "{{ object.event_name }}"?</h2>
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-danger" type="submit">Yes</button>
+                <a class="btn btn-outline-primary" href="{% url 'event-detail' object.id%}">No</a>
+            </div>
+        </form>
+   </div>
+{% endblock content %}

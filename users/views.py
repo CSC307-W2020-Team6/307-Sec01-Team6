@@ -77,6 +77,7 @@ def add_friends(request):
     }
     return render(request, 'users/addFriends.html', context) # , context
 
+
 @login_required
 def remove_friends(request):
     found_flag = 0

@@ -9,11 +9,14 @@ class Event(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='event_owner')
     event_name = models.CharField(max_length=100)
     date = models.DateField(default=timezone.now)
-    start_time = models.DateTimeField(default=timezone.now)
-    end_time = models.DateTimeField(default=timezone.now)
+    start_time = models.TimeField(default=timezone.now)
+    end_time = models.TimeField(default=timezone.now)
 
     def __str__(self):
         return self.event_name
+
+    def get_absolute_url(self):
+        return reverse('event-detail', kwargs={'pk': self.pk})
 
 
 class Timetable(models.Model):

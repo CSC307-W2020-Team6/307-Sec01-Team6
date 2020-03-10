@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'friendship',
     'django_password_strength',
+
     # 'django.contrib.sites',
     # 'LyncUp.apps.LyncupConfig',
     # 'users',

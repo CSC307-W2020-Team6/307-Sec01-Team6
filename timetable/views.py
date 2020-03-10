@@ -34,7 +34,7 @@ class EventUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class EventDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Event
-    success_url = '/'
+    success_url = '/event/list'
 
     # test used to see if user can get to page
     def test_func(self):
@@ -46,6 +46,16 @@ class EventDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 class EventListView(ListView):
     model = Event
+    context_object_name = 'events'
+
+
+class EventDetailView(DetailView):
+    model = Event
+
+    def get_context_data(self, **kwargs):
+        context = super(EventDetailView, self).get_context_data()
+        context['events'] = reversed(Event.objects.all())
+        return context
 
 
 class TimetableDetailView(DetailView):
