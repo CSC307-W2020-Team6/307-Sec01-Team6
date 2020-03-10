@@ -59,6 +59,9 @@ def add_friends(request):
         if f_form.is_valid():
             f_form.save()
             new_friend = f_form.cleaned_data.get("User")
+            if str(request.user) == str(new_friend):
+                messages.warning(request, f'You cannot add yourself as a friend.')
+                return redirect('profile')
             # friendlist = Friend.objects.filter(current_user=request.user).get()
             if len(Friend.objects.all()) > 0:
                 try:
