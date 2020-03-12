@@ -57,13 +57,16 @@ def add_friends(request):
         if f_form.is_valid():
             f_form.save()
             new_friend = f_form.cleaned_data.get("User")
+            if str(request.user) == str(new_friend):
+                messages.warning(request, f'You cannot add yourself as a friend.')
+                return redirect('addfriend')
             # friendlist = Friend.objects.filter(current_user=request.user).get()
             if len(Friend.objects.all()) > 0:
                 try:
                     for u in Friend.objects.filter(current_user=request.user).get().users.all():
                         if str(u) == str(new_friend):
                             messages.warning(request, f'User is already in your friends list!')
-                            return redirect('profile')
+                            return redirect('addfriend')
                 except:
                     pass
 
@@ -74,16 +77,17 @@ def add_friends(request):
             if found_flag == 1:
                 Friend.make_friend(request.user, new_friend)
                 messages.success(request, f'Friend Added!')
-                return redirect('profile')
+                return redirect('friends_list')
             else:
                 messages.warning(request, f'No user found, can only add existing users.')
-                return redirect('profile')
+                return redirect('addfriend')
     else:
         f_form = AddFriendForm(instance=request.user)
     context = {
         'f_form': f_form
     }
     return render(request, 'users/addFriends.html', context) # , context
+
 
 @login_required
 def remove_friends(request):
@@ -102,10 +106,10 @@ def remove_friends(request):
             if found_flag == 1:
                 Friend.remove_friend(request.user, the_friend)
                 messages.success(request, f'Friend Removed.')
-                return redirect('profile')
+                return redirect('friends_list')
             else:
                 messages.warning(request, f'Inputted user not in friends list.')
-                return redirect('profile')
+                return redirect('removefriend')
     else:
         r_form = RemoveFriendForm(instance=request.user)
     context = {

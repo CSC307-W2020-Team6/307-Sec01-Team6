@@ -2,6 +2,7 @@
 <html lang="en">
 {% load static %}
 <head>
+
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
@@ -35,6 +36,9 @@
           <a class="nav-item nav-link" href="/about">About</a>
             <a class="nav-item nav-link" href={% url 'group-list' %}>Groups</a>
             <a class="nav-item nav-link" href={% url 'friends_list' %}>Friends</a>
+            <a class="nav-item nav-link" href={% url 'event-list' %}>Events</a>
+
+
         </div>
         <!-- Navbar Right Side -->
         <div class="navbar-nav">
@@ -45,6 +49,7 @@
 {#                <a class="nav-item nav-link" href="{%  url 'connect:view_profile_with_pk' pk=user.pk %}">Add Friend</a>#}
                 <a class="nav-item nav-link" href="{% url 'post-create' %}">Create Post</a>
                 <!-- <a class="nav-item nav-link" href="{ % url 'post-create' % }">Create Post</a> -->
+                <a class="nav-item nav-link" href={% url 'event-create' %}>Add Event</a>
                 <a class="nav-item nav-link" href={% url 'profile' %}>Profile</a>
                 <a class="nav-item nav-link" href={% url 'logout' %}>Logout</a>
             {% else %}

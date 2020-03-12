@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'LyncUp.apps.LyncupConfig',
     'users.apps.UsersConfig',
+    'timetable.apps.TimetableConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,6 +43,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'friendship',
     'django_password_strength',
+
     # 'django.contrib.sites',
     # 'LyncUp.apps.LyncupConfig',
     # 'users',

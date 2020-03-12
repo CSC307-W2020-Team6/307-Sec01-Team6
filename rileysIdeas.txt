@@ -1,0 +1,40 @@
+things I tried that I ended up reverting
+
+<div class="col-md-8">
+        <div class="content-section">
+            <h2>Chat Activity:</h2>
+            {% for event in events %}
+                {% if event.owner.group == object %}
+                    <div class="card">
+                    <div class="card-body">
+                    <h1> <img class="rounded-circle" style="height: 50px; width: 50px; margin-right: 5px" src="{{ post.author.profile.image.url }}">
+                        <a href={% url 'event-detail' post.id %}>{{ post.title }}</a>
+                    </h1>
+                    <h5>By {{ post.author }} on {{ post.date_posted }}</h5>
+                    <p>{{ post.content }}</p>
+                    </div>
+                </div>
+                <br>
+                {% endif %}
+            {% endfor %}
+             <a class="btn btn-primary" href={% url 'event-create' %}>Post</a>
+        </div>
+    </div>
+
+
+
+    class GroupDetailView(DetailView):
+    model = Group
+    model2 = Event
+
+    def get_context_data(self, **kwargs):
+        posts = super(GroupDetailView, self).get_context_data()
+        posts['events'] = reversed(Event.objects.all())
+
+        context = {'post': posts, 'event': EventDetailView.get_context_data,
+                   'posts': reversed(Post.objects.all()), 'events': reversed(Event.objects.all())}
+        return context
+
+
+        The above code work in terms of displaying everything in the group detail view, however members and
+        posts would not appear
