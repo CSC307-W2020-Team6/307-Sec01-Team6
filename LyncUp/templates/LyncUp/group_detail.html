@@ -797,7 +797,7 @@
     </div>
     <hr>
 
-    {% if user in object.members.all %}
+    {% if user == object.group_owner %}
         <div>
             <a class="btn btn-secondary" href="{% url 'group-update' object.id %}">Edit Group</a>
             <a class="btn btn-danger" href="{% url 'group-delete' object.id %}">Delete</a>
