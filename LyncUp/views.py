@@ -6,6 +6,7 @@ from django.db import models
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required
 from .models import Post, Group
+from timetable.models import Event
 from .forms import GroupCreateForm, GroupUpdateForm
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy, reverse
@@ -73,12 +74,27 @@ class PostDetailView(DetailView):
     model = Post
 
 
+def get_arr(users):
+    # Creates a list containing 7 lists, each of 24 items, all set to 0
+    w, h = 24, 7
+    output = [[[0 for x in range(w)] for y in range(h)] for z in range(len(users))]
+    i = 0
+
+    for user in users:
+        for event in Event.objects.all().filter(owner=user):
+            for x in range(event.get_start_hour(), event.get_end_hour()):
+                output[i][event.get_date_as_int()][x] = user.profile.image.url
+        i += 1
+    return output
+
+
 class GroupDetailView(DetailView):
     model = Group
 
     def get_context_data(self, **kwargs):
         context = super(GroupDetailView, self).get_context_data()
         context['posts'] = reversed(Post.objects.all())
+        context['3d_arr'] = get_arr(self.get_object().members.all())
         return context
 
 

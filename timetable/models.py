@@ -2,7 +2,6 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
-import datetime
 
 
 class Event(models.Model):
@@ -29,8 +28,6 @@ class Event(models.Model):
 
 
 class Timetable(models.Model):
-    owner = models.OneToOneField(User, on_delete=models.CASCADE, related_name='timetable_owner')
-    busy = models.ManyToManyField(Event)
 
     # 1. Make an event model that has a name date start and end times. Add to busy = models.Many...
     # 2.

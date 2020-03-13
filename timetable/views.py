@@ -77,6 +77,26 @@ def user_table(request):
     return render(request, 'timetable/timetable.html', context)
 
 
+def group_table(request):
+
+    def get_array(users):
+        # Creates a list containing 7 lists, each of 24 items, all set to 0
+        w, h = 24, 7
+        output = [[[0 for x in range(w)] for y in range(h)] for z in range(users.length)]
+
+        for user in users:
+            for event in user_events:
+                for x in range(event.get_start_hour(), event.get_end_hour()):
+                    output[event.get_date_as_int()][x] = event
+        return output
+
+    context = {
+        'events': get_array(Event.objects.all().filter(owner=request.user))
+    }
+
+    return render(request, 'timetable/timetable.html', context)
+
+
 class TimetableDetailView(DetailView):
     pass
 

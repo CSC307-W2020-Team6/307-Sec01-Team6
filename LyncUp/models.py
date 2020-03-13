@@ -26,6 +26,8 @@ class Group(models.Model):
             img.save(self.image.path)
 
 
+
+
 class Post(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField()
