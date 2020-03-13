@@ -118,7 +118,10 @@ class GroupCreateView(LoginRequiredMixin, CreateView):
     fields = ['name', 'image', 'members']
 
     def form_valid(self, form):
-        form.instance.group_owner = self.request.user
+        members = form.cleaned_data.get('members')
+        if self.request.user not in members:
+            messages.warning(self.request, 'You must add yourself to your group')
+            return redirect('group')
         return super().form_valid(form)
 
 

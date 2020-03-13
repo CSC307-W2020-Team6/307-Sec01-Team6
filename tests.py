@@ -2,7 +2,10 @@ import unittest
 import CSC307_LyncUp
 from CSC307_LyncUp import wsgi
 from LyncUp.models import Post, Group
+from users.models import Profile
+from timetable.models import Event
 from django.contrib.auth.models import User
+from django.utils import timezone
 from django.db import models
 
 
@@ -34,16 +37,6 @@ class MyTestCase(unittest.TestCase):
 
         self.assertEqual("The Boys", group.name)
 
-    # def test_group2(self):
-    #     matt = User(username="MattyJ", password="word", email="matt@icloud.com",
-    #                 first_name="Matt", last_name="Jaojoco", id=0)
-    #     riley = User(username="RiRi", password="word", email="riley@icloud.com",
-    #                  first_name="Riley", last_name="Mete", id=1)
-    #     gabe = User(username="Gabester", password="word", email="gabe@icloud.com",
-    #                 first_name="Gabe", last_name="Barney", group=3, id=2)
-    #     group = Group(name="The Boys", id=3, image='default_group.jpg', group_owner=matt)
-    #     group.members = models.ManyToManyField(riley)
-    #     self.assertEqual(group.members[0], riley)
 
     def test_group3(self):
         matt = User(username="MattyJ", password="word", email="matt@icloud.com",
@@ -66,6 +59,43 @@ class MyTestCase(unittest.TestCase):
         group = Group(name="The Boys", id=3, image='default_group.jpg', group_owner=matt)
 
         self.assertEqual(group.group_owner, matt)
+
+# The following test cases are designed to test our Profile class
+
+    def test_profile1(self):
+        gabe = User(username="Gabester", password="word", email="gabe@icloud.com",
+                    first_name="Gabe", last_name="Barney", group=3, id=2)
+        profile = Profile(user=gabe, image="default.jpg")
+        self.assertEqual(profile.user, gabe)
+
+    def test_profile2(self):
+        riley = User(username="RiRi", password="word", email="riley@icloud.com",
+                     first_name="Riley", last_name="Mete", id=1)
+        profile = Profile(user=riley, image="default.jpg")
+        self.assertEqual(profile.image, "default.jpg")
+
+# The following test cases are designed to test our Event class
+    def test_event1(self):
+        matt = User(username="MattyJ", password="word", email="matt@icloud.com",
+                    first_name="Matt", last_name="Jaojoco", id=0)
+        event = Event(owner=matt, event_name="Software Engineering", date=timezone.now,
+                      start_time=timezone.now, end_time=timezone.now)
+        self.assertEqual(event.owner, matt)
+
+    def test_event2(self):
+        gabe = User(username="Gabester", password="word", email="gabe@icloud.com",
+                    first_name="Gabe", last_name="Barney", group=3, id=2)
+        event = Event(owner=gabe, event_name="Programming", date=timezone.now,
+                      start_time=timezone.now, end_time=timezone.now)
+        self.assertEqual(event.event_name, "Programming")
+
+    def test_event3(self):
+        riley = User(username="RiRi", password="word", email="riley@icloud.com",
+                     first_name="Riley", last_name="Mete", id=1)
+        event = Event(owner=riley, event_name="Coding", date=timezone.now,
+                      start_time=timezone.now, end_time="08:10:00")
+        self.assertEqual(event.end_time, "08:10:00")
+
 
 
 if __name__ == '__main__':
