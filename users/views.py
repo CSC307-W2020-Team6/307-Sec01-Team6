@@ -46,8 +46,6 @@ def profile(request):
         'p_form': p_form
     }
     return render(request, 'users/profile.html', context)
-
-
 ## From Here
 
 @login_required
@@ -118,7 +116,6 @@ def remove_friends(request):
         'r_form': r_form
     }
     return render(request, 'users/removeFriends.html', context)
-
 
 
 class FriendListView(ListView):
