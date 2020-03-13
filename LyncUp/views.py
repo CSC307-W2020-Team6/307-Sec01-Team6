@@ -86,7 +86,7 @@ def get_arr(users):
     max_event = datetime.today() + timedelta(days=days_left_in_week)
     for user in users:
         for event in Event.objects.all().filter(owner=user):
-            if event.date >= max_event.date():
+            if event.date > max_event.date():
                 continue
             for x in range(event.get_start_hour(), event.get_end_hour()):
                 output[i][event.get_date_as_int()][x] = user.profile.image.url
