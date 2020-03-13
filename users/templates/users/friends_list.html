@@ -1,7 +1,8 @@
 {% extends "LyncUp/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-    <h1>Your Friends:</h1>
+    <h1>Your Friends: </h1>
+    <br>
     {% for friend in friends %}
         {% for user in friend.users.all %}
             <div class = "card" style="margin-bottom: 5px; padding: 0; display: flow">
@@ -15,5 +16,9 @@
         {% endfor %}
     {% endfor %}
     <br>
+    <br>
+    <input type=button onclick="location.href='addfriend'" value = 'Add Friends'>
+    <input type=button onclick="location.href='removefriend'" value = 'Remove Friends'>
+
 
 {% endblock content %}

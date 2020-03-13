@@ -2,6 +2,8 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
+
+
     <form method="POST" enctype = "multipart/form-data">
         {% csrf_token %}
         <fieldset class = "form-group">
@@ -13,5 +15,13 @@
             <button class="btn btn-outline-info" type="submit">Remove Friend</button>
         </div>
     </form>
+
+    <button onclick="back()">Back to friend's list</button>
+
+    <script>
+    function back() {
+        window.history.back();
+    }
+    </script>
 
 {% endblock content %}
