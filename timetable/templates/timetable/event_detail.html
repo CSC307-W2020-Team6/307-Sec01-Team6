@@ -1,7 +1,7 @@
 {% extends "LyncUp/base.html" %}
 {% block content %}
     <h1> <img class="rounded-circle" style="height: 50px; margin-right: 5px" src="{{ object.author.profile.image.url }}"> {{ object.event_name }}</h1>
-    <h5>Date: {{ object.date }} </h5>
+    <h5>Date: {{ object.date|date:"l"}} </h5>
     <h5>Start Time: {{ object.start_time}} </h5>
     <h5>End Time {{ event.end_time }}</h5>
     <p>{{ object.content }}</p>
