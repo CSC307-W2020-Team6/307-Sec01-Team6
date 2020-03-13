@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
 from django import forms
@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Post, Group
 from .forms import GroupCreateForm, GroupUpdateForm
 from django.contrib.auth.models import User
+from django.urls import reverse_lazy, reverse
 
 
 def home(request):
@@ -85,6 +86,9 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     fields = ['title', 'content', 'group']
 
+    def get_success_url(self):
+        return reverse('group-detail', kwargs={'pk': self.object.group.pk})
+
     def form_valid(self, form):
         form.instance.author = self.request.user
         if form.instance.author not in form.instance.group.members.all():
@@ -136,7 +140,9 @@ class GroupUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
-    success_url = '/'
+
+    def get_success_url(self):
+        return reverse('group-detail', kwargs={'pk': self.object.group.pk})
 
     # test used to see if user can get to page
     def test_func(self):
