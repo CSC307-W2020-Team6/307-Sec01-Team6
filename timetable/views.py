@@ -85,6 +85,11 @@ class EventListView(ListView):
     model = Event
     context_object_name = 'events'
 
+    def get_context_data(self, **kwargs):
+        context = super(EventListView, self).get_context_data()
+        context['events'] = Event.objects.filter(owner=self.request.user)
+        return context
+
 
 class EventDetailView(DetailView):
     model = Event
