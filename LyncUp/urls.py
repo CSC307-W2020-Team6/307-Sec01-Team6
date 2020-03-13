@@ -5,6 +5,7 @@ from LyncUp import views as LyncUp_views
 
 
 urlpatterns = [
+    path('', views.home, name='LyncUp-home'),
     path('group/list/', GroupListView.as_view(), name='group-list'),
     # path with variable
     path('group/<int:pk>/update/', GroupUpdateView.as_view(), name='group-update'),
