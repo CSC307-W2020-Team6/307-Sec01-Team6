@@ -1,8 +1,5 @@
 
-# from django.test import LiveServerTestCase
-# from selenium import webdriver
-# from selenium.webdriver.common.keys import Keys
-# 
+
 # 
 # class AccountTestCase(LiveServerTestCase):
 # 
@@ -43,6 +40,7 @@ from timetable.models import Event
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.db import models
+
 
 
 class MyTestCase(unittest.TestCase):
