@@ -123,22 +123,3 @@ def user_table(request):
 
     return render(request, 'timetable/timetable.html', context)
 
-
-class TimetableDetailView(DetailView):
-    pass
-
-
-class TimetableCreateView(CreateView):
-    pass
-
-
-class TimetableUpdateView(UpdateView):
-    pass
-
-
-class TimetableListView(ListView):
-    pass
-
-
-class TimetableDeleteView(DeleteView):
-    pass
