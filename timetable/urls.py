@@ -6,7 +6,6 @@ from . import views
 
 
 urlpatterns = [
-    path('', views.user_table, name='LyncUp-home'),
     path('event/list/', EventListView.as_view(), name='event-list'),
     path('event/<int:pk>/update/', EventUpdateView.as_view(), name='event-update'),
     path('timetable/', views.user_table, name='table'),
