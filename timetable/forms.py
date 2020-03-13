@@ -37,8 +37,8 @@ class EventCreateForm(forms.ModelForm):
         self.fields["end_time"].widget = TimeInput()
 
 
-class TimetableUpdateForm(forms.ModelForm):
-    class Meta:
-        model = Timetable
-        fields = ['name', 'image', 'members']
+# class TimetableUpdateForm(forms.ModelForm):
+#     class Meta:
+#         model = Timetable
+#         fields = ['name', 'image', 'members']
 
