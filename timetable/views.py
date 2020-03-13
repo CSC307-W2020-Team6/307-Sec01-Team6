@@ -15,6 +15,11 @@ class EventCreateView(CreateView):
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
+        if form.instance.date.day < datetime.today().day or form.instance.date.month < datetime.today().month or \
+                form.instance.date.year < datetime.today().year:
+            messages.warning(self.request, f'Can\'t create a past event')
+            return redirect('event-create')
+
         if form.instance.start_time > form.instance.end_time:
             messages.warning(self.request, f'Start Time is greater then end time')
             return redirect('event-create')
