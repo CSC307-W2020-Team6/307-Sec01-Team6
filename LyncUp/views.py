@@ -6,6 +6,7 @@ from django.db import models
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required
 from .models import Post, Group
+from users.models import Friend
 from timetable.models import Event
 from .forms import GroupCreateForm, GroupUpdateForm
 from django.contrib.auth.models import User
@@ -127,6 +128,10 @@ class GroupCreateView(LoginRequiredMixin, CreateView):
         if self.request.user not in members:
             messages.warning(self.request, 'You must add yourself to your group')
             return redirect('group')
+        for member in members:
+            if member not in Friend.objects.filter(current_user=self.request.user).get().users.all():
+                messages.warning(self.request, 'You can only add yourself and users you are friends with')
+                return redirect('group')
         return super().form_valid(form)
 
 
@@ -148,7 +153,7 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class GroupUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Group
-    fields = ['name', 'image', 'members']
+    fields = ['name', 'image']
 
     def form_valid(self, g_form):
         # g_form.instance.author = self.request.user

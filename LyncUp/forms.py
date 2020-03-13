@@ -12,4 +12,4 @@ class GroupCreateForm(forms.ModelForm):
 class GroupUpdateForm(forms.ModelForm):
     class Meta:
         model = Group
-        fields = ['name', 'image', 'members']
+        fields = ['name', 'image']
