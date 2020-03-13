@@ -29,6 +29,7 @@ class Profile(models.Model):
 #     to_person = models.ForeignKey(Profile, related_name = 'to_people',
 #                                   on_delete=models.CASCADE)
 
+
 class Friend(models.Model):
     users = models.ManyToManyField(User)
     #current_user = models.ManyToManyField(User)
