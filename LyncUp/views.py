@@ -10,6 +10,8 @@ from timetable.models import Event
 from .forms import GroupCreateForm, GroupUpdateForm
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy, reverse
+from datetime import datetime, timedelta
+
 
 
 def home(request):
@@ -79,9 +81,12 @@ def get_arr(users):
     w, h = 24, 7
     output = [[[0 for x in range(w)] for y in range(h)] for z in range(len(users))]
     i = 0
-
+    days_left_in_week = 6 - datetime.today().weekday()
+    max_event = datetime.today() + timedelta(days=days_left_in_week)
     for user in users:
         for event in Event.objects.all().filter(owner=user):
+            if event.date >= max_event.date():
+                continue
             for x in range(event.get_start_hour(), event.get_end_hour()):
                 output[i][event.get_date_as_int()][x] = user.profile.image.url
         i += 1

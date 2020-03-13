@@ -111,8 +111,11 @@ def user_table(request):
         # Creates a list containing 7 lists, each of 24 items, all set to 0
         w, h = 24, 7
         output = [[0 for x in range(w)] for y in range(h)]
-
+        days_left_in_week = 6 - datetime.today().weekday()
+        max_event = datetime.today() + timedelta(days=days_left_in_week)
         for event in events:
+            if event.date >= max_event.date():
+                continue
             for x in range(event.get_start_hour(), event.get_end_hour()):
                 output[event.get_date_as_int()][x] = event
         return output
