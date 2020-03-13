@@ -81,7 +81,7 @@ def get_arr(users):
     w, h = 24, 7
     output = [[[0 for x in range(w)] for y in range(h)] for z in range(len(users))]
     i = 0
-    days_left_in_week = 6 - datetime.today().weekday()
+    days_left_in_week = 7 - datetime.today().weekday()
     max_event = datetime.today() + timedelta(days=days_left_in_week)
     for user in users:
         for event in Event.objects.all().filter(owner=user):
