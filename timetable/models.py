@@ -18,6 +18,15 @@ class Event(models.Model):
     def get_absolute_url(self):
         return reverse('event-detail', kwargs={'pk': self.pk})
 
+    def get_start_hour(self):
+        return self.start_time.hour
+
+    def get_end_hour(self):
+        return self.end_time.hour
+
+    def get_date_as_int(self):
+        return self.date.weekday()
+
 
 class Timetable(models.Model):
     owner = models.OneToOneField(User, on_delete=models.CASCADE, related_name='timetable_owner')
