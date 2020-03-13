@@ -19,7 +19,6 @@ class EventCreateView(CreateView):
                 form.instance.date.year < datetime.today().year:
             messages.warning(self.request, f'Can\'t create a past event')
             return redirect('event-create')
-
         if form.instance.start_time > form.instance.end_time:
             messages.warning(self.request, f'Start Time is greater then end time')
             return redirect('event-create')
@@ -47,6 +46,10 @@ class EventUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
+        if form.instance.date.day < datetime.today().day or form.instance.date.month < datetime.today().month or \
+                form.instance.date.year < datetime.today().year:
+            messages.warning(self.request, f'Can\'t create a past event')
+            return redirect('event-create')
         if form.instance.start_time > form.instance.end_time:
             messages.warning(self.request, f'Start Time is greater then end time')
             return redirect('event-create')
@@ -54,17 +57,19 @@ class EventUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
                 form.instance.end_time.hour < 8:
             messages.warning(self.request, f'Events can only be created in-between 8am-10pm')
             return redirect('event-create')
-        for event in Event.objects.all():
-            if event.start_time <= form.instance.start_time <= event.end_time and form.instance.date == event.date and \
-                    event.start_time <= form.instance.end_time <= event.end_time:
-                messages.warning(self.request, f'Can\'t have an event in the middle of another event')
-                return redirect('event-create')
-            if event.start_time <= form.instance.start_time <= event.end_time and form.instance.date == event.date:
-                messages.warning(self.request, f'Can\'t have an event start in the middle of another event')
-                return redirect('event-create')
-            if event.start_time <= form.instance.end_time <= event.end_time and form.instance.date == event.date:
-                messages.warning(self.request, f'Can\'t have an event end in the middle of another event')
-                return redirect('event-create')
+        # start = form.instance.start_time
+        # end = form.instance.end_time
+        # for event in Event.objects.all():
+        #     if event.start_time <= start <= event.end_time and form.instance.date == event.date and \
+        #             event.start_time <= form.instance.end_time <= event.end_time:
+        #         messages.warning(self.request, f'Can\'t have an event in the middle of another event')
+        #         return redirect('event-create')
+        #     if event.start_time <= form.instance.start_time <= event.end_time and form.instance.date == event.date:
+        #         messages.warning(self.request, f'Can\'t have an event start in the middle of another event')
+        #         return redirect('event-create')
+        #     if event.start_time <= form.instance.end_time <= event.end_time and form.instance.date == event.date:
+        #         messages.warning(self.request, f'Can\'t have an event end in the middle of another event')
+        #         return redirect('event-create')
         return super().form_valid(form)
 
     def test_func(self):
@@ -114,7 +119,7 @@ def user_table(request):
         days_left_in_week = 6 - datetime.today().weekday()
         max_event = datetime.today() + timedelta(days=days_left_in_week)
         for event in events:
-            if event.date >= max_event.date():
+            if event.date > max_event.date():
                 continue
             for x in range(event.get_start_hour(), event.get_end_hour()):
                 output[event.get_date_as_int()][x] = event

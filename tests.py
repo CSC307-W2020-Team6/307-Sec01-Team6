@@ -1,72 +1,34 @@
-import unittest
-import CSC307_LyncUp
-from CSC307_LyncUp import wsgi
-from LyncUp.models import Post, Group
-from django.contrib.auth.models import User
-from django.db import models
-
-
-class MyTestCase(unittest.TestCase):
-
-    # The following test cases are designed to test our Post class
-    def test_post1(self):
-        post = Post(title="post", content="my post", date_posted="Mon, 23 May 2016 08:30:15 GMT")
-        self.assertEqual(post.title, "post")
-
-    def test_post2(self):
-        post = Post(title="post", content="my post")
-        self.assertEqual(post.content, "my post")
-
-    def test_post3(self):
-        post = Post(title="post", content="my post")
-        self.assertNotEqual(post.date_posted, "today")
-
-    # The following test cases are designed to test our Group class
-
-    def test_group1(self):
-        matt = User(username="MattyJ", password="word", email="matt@icloud.com",
-                    first_name="Matt", last_name="Jaojoco", id=0)
-        riley = User(username="RiRi", password="word", email="riley@icloud.com",
-                     first_name="Riley", last_name="Mete", id=1)
-        gabe = User(username="Gabester", password="word", email="gabe@icloud.com",
-                    first_name="Gabe", last_name="Barney", group=3, id=2)
-        group = Group(name="The Boys", id=3, image='default_group.jpg', group_owner=matt)
-
-        self.assertEqual("The Boys", group.name)
-
-    # def test_group2(self):
-    #     matt = User(username="MattyJ", password="word", email="matt@icloud.com",
-    #                 first_name="Matt", last_name="Jaojoco", id=0)
-    #     riley = User(username="RiRi", password="word", email="riley@icloud.com",
-    #                  first_name="Riley", last_name="Mete", id=1)
-    #     gabe = User(username="Gabester", password="word", email="gabe@icloud.com",
-    #                 first_name="Gabe", last_name="Barney", group=3, id=2)
-    #     group = Group(name="The Boys", id=3, image='default_group.jpg', group_owner=matt)
-    #     group.members = models.ManyToManyField(riley)
-    #     self.assertEqual(group.members[0], riley)
-
-    def test_group3(self):
-        matt = User(username="MattyJ", password="word", email="matt@icloud.com",
-                    first_name="Matt", last_name="Jaojoco", id=0)
-        riley = User(username="RiRi", password="word", email="riley@icloud.com",
-                     first_name="Riley", last_name="Mete", id=1)
-        gabe = User(username="Gabester", password="word", email="gabe@icloud.com",
-                    first_name="Gabe", last_name="Barney", group=3, id=2)
-        group = Group(name="The Boys", id=3, image='default_group.jpg', group_owner=matt)
-
-        self.assertEqual(group.image, 'default_group.jpg')
-
-    def test_group4(self):
-        matt = User(username="MattyJ", password="word", email="matt@icloud.com",
-                    first_name="Matt", last_name="Jaojoco", id=0)
-        riley = User(username="RiRi", password="word", email="riley@icloud.com",
-                     first_name="Riley", last_name="Mete", id=1)
-        gabe = User(username="Gabester", password="word", email="gabe@icloud.com",
-                    first_name="Gabe", last_name="Barney", group=3, id=2)
-        group = Group(name="The Boys", id=3, image='default_group.jpg', group_owner=matt)
-
-        self.assertEqual(group.group_owner, matt)
-
-
-if __name__ == '__main__':
-    unittest.main()
+# from django.test import LiveServerTestCase
+# from selenium import webdriver
+# from selenium.webdriver.common.keys import Keys
+# 
+# 
+# class AccountTestCase(LiveServerTestCase):
+# 
+#     def setUp(self):
+#         self.selenium = webdriver.Safari()
+#         super(AccountTestCase, self).setUp()
+# 
+#     def tearDown(self):
+#         self.selenium.quit()
+#         super(AccountTestCase, self).tearDown()
+# 
+#     def test_register(self):
+#         selenium = self.selenium
+#         # Opening the link we want to test
+#         selenium.get('http://127.0.0.1:8000/register/')
+#         # find the form element
+#         username = selenium.find_element_by_id('id_username')
+#         email = selenium.find_element_by_id('email')
+#         password1 = selenium.find_element_by_id('password1')
+#         password2 = selenium.find_element_by_id('password2')
+#         submit = selenium.find_element_by_name('register')
+# 
+#         username.send_keys('rmete')
+#         email.send_keys('riley@mete.com')
+#         password1.send_keys('password321')
+#         password2.send_keys('password321')
+# 
+#         submit.send_keys(Keys.RETURN)
+# 
+#         assert 'Check your email' in selenium.page_source
