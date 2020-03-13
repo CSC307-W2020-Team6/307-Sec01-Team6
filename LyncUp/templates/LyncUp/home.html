@@ -1,5 +1,8 @@
 {% extends "LyncUp/base.html" %}
 {% block content %}
-    <h3>This is our home page. We should put stuff here</h3>
+    {% load static %}
+    <div style="background-image: url({% static 'images/LyncUp_Homepage.png' %})">
+        <img src='{% static 'images/LyncUp_Homepage.png' %}' style="max-height: 99%; margin: 0; padding: 0; max-width: 99%">
+    </div>
 {% endblock content %}
 
