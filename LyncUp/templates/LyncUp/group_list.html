@@ -1,6 +1,7 @@
 {% extends "LyncUp/base.html" %}
 {% block content %}
-    <h1>Your Groups</h1>
+    <h1>Your Groups: </h1>
+    <br>
     {% for group in groups %}
         {% if request.user in group.members.all %}
         <div class="card" style="margin: 5px; display: flow">
@@ -12,5 +13,12 @@
         </div>
         {% endif %}
     {% endfor %}
+
+    <br>
+    <br>
+
+    <input type=button onclick="location.href='new'" value = 'Create Group'>
+
+
 {% endblock content %}
 
