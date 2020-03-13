@@ -129,9 +129,10 @@ class GroupCreateView(LoginRequiredMixin, CreateView):
             messages.warning(self.request, 'You must add yourself to your group')
             return redirect('group')
         for member in members:
-            if member not in Friend.objects.filter(current_user=self.request.user).get().users.all():
+            if member not in Friend.objects.filter(current_user=self.request.user).get().users.all() and member != self.request.user:
                 messages.warning(self.request, 'You can only add yourself and users you are friends with')
                 return redirect('group')
+        form.instance.group_owner = self.request.user
         return super().form_valid(form)
 
 

@@ -26,7 +26,7 @@ class EventCreateView(CreateView):
                 form.instance.end_time.hour < 8:
             messages.warning(self.request, f'Events can only be created in-between 8am-10pm')
             return redirect('event-create')
-        for event in Event.objects.all():
+        for event in Event.objects.all().filter(owner=self.request.user):
             if event.start_time <= form.instance.start_time <= event.end_time and form.instance.date == event.date and \
                     event.start_time <= form.instance.end_time <= event.end_time:
                 messages.warning(self.request, f'Can\'t have an event in the middle of another event')
