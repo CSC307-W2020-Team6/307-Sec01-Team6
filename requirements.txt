@@ -1,5 +1,5 @@
 selenium
-django==2.2.10
+django==2.2.18
 django_crispy_forms==1.8.1
 django_friendship==1.8.2
 django_password_strength==1.2.1
