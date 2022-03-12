@@ -3,4 +3,4 @@ django==2.2.24
 django_crispy_forms==1.8.1
 django_friendship==1.8.2
 django_password_strength==1.2.1
-pillow==8.3.2
+pillow==9.0.1
